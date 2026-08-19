@@ -5,7 +5,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import gsap from 'gsap'
 import { ArrowDown, ArrowUpRight, Brain, Check, Dumbbell, Flame, Menu, ScanLine, X, Zap } from 'lucide-react'
 
-const surveyUrl = 'https://titantechng.vercel.app/survey'
+const surveyUrl = 'https://form.jotform.com/262306411833046'
 
 const assets = {
   logo: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/titanfitnesslogo-5ISv5cNMEDASxuQQVbjAmKz2GpBFaE.jpg',
