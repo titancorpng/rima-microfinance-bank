@@ -3,25 +3,34 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Titan Fitness — Train with intent.',
-  description: 'Titan Fitness is the training operating system for people who refuse to plateau.',
-  generator: 'Titan-Tech Ltd.',
-  icons: {
-    icon: [
+  metadataBase: new URL('https://titanfitnessapplaunch.vercel.app'),
+  title: 'Titan Fitness | Train with intent.',
+  description: 'Titan Fitness helps you train with structure, track meaningful progress, and build habits that last.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    url: 'https://titanfitnessapplaunch.vercel.app',
+    siteName: 'Titan Fitness',
+    title: 'Titan Fitness | Train with intent.',
+    description: 'A focused training system for smarter workouts, consistent progress, and a stronger everyday life.',
+    images: [
       {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
+        url: '/titanfitnesslogo.jpg',
+        alt: 'Titan Fitness logo',
       },
     ],
-    apple: '/apple-icon.png',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Titan Fitness | Train with intent.',
+    description: 'A focused training system for smarter workouts, consistent progress, and a stronger everyday life.',
+    images: ['/titanfitnesslogo.jpg'],
+  },
+  icons: {
+    icon: '/titanfitnesslogo.jpg',
+    apple: '/titanfitnesslogo.jpg',
   },
 }
 
