@@ -21,7 +21,7 @@ export function RimaHeader() {
     <nav className="desktop-nav" aria-label="Primary navigation">{links.map(([label, href]) => <Link className={pathname === href ? 'active' : ''} href={href} key={href}>{label}</Link>)}</nav>
     <Link className="rima-button header-cta" href="/app#download">Get the app</Link>
     <button className="menu-trigger" type="button" aria-label={open ? 'Close menu' : 'Open menu'} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>
-    {open && <div className="mobile-menu"><nav aria-label="Mobile navigation">{links.map(([label, href], index) => <Link style={{ animationDelay: `${index * 60}ms` }} href={href} key={href}>{label}</Link>)}<Link className="rima-button" href="/app#download">Get the app</Link></nav></div>}
+    {open && <><button className="mobile-menu-backdrop" type="button" aria-label="Close navigation menu" onClick={() => setOpen(false)} /><div className="mobile-menu" onClick={(event) => event.stopPropagation()}><nav aria-label="Mobile navigation">{links.map(([label, href], index) => <Link style={{ animationDelay: `${index * 60}ms` }} href={href} key={href}>{label}</Link>)}<Link className="rima-button" href="/app#download">Get the app</Link></nav></div></>}
   </header>
 }
 
@@ -37,7 +37,7 @@ const regulatoryItems = [{ label: 'LICENSED BY THE CENTRAL BANK OF NIGERIA', sho
 
 function RegulatoryMark({ icon }: { icon: typeof regulatoryItems[number]['icon'] }) { return <span className={`regulatory-mark regulatory-mark-${icon}`} aria-hidden="true">{icon === 'bank' ? 'CBN' : icon === 'shield' ? 'NDIC' : '93'}</span> }
 
-export function RegulatoryCarousel({ logos = false }: { logos?: boolean }) { const items = [...regulatoryItems, ...regulatoryItems]; return <section className={`regulatory-carousel ${logos ? 'regulatory-carousel-logos' : ''}`} aria-label={logos ? 'Rima regulatory protections' : 'Rima regulatory information'}><div className="regulatory-track">{items.map((item, index) => <div className="regulatory-item" key={`${item.short}-${index}`}><RegulatoryMark icon={item.icon} /><span>{logos ? item.short : item.label}</span>{logos && <small>{item.label}</small>}</div>)}</div></section> }
+export function RegulatoryCarousel({ logos = false }: { logos?: boolean }) { return <section className={`regulatory-carousel ${logos ? 'regulatory-carousel-logos' : ''}`} aria-label={logos ? 'Rima regulatory protections' : 'Rima regulatory information'}><div className="regulatory-track">{regulatoryItems.map((item) => <div className="regulatory-item" key={item.short}><RegulatoryMark icon={item.icon} /><span>{logos ? item.short : item.label}</span>{logos && <small>{item.label}</small>}</div>)}</div></section> }
 
 export function DownloadState() { return <div id="download" className="download-state"><strong>App download links coming soon</strong><p>The Rima MFB app is not yet available for public download. Official download links will be published here when it is released.</p></div> }
 
