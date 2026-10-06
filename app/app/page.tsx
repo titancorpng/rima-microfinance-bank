@@ -1,3 +1,2 @@
-import { DownloadState, PageShell, PhoneMockup, assetUrls } from '@/components/rima-shell'
-const screens = [[assetUrls.home,'Rima account home','Your account at a glance'],[assetUrls.data,'Mobile data top-up','Manage supported data purchases'],[assetUrls.airtime,'Airtime top-up','Buy airtime when you need it']]
-export default function AppPage() { return <PageShell><section className="page-hero"><p className="rima-eyebrow">RIMA MFB APP</p><h1>Your Rima account, <span>on your phone.</span></h1><p className="lead">A convenient digital experience for eligible customers. Official store links will be published here when the app is released.</p><DownloadState /></section><section className="phone-gallery" aria-label="Rima app screens">{screens.map(([src, alt, caption]) => <PhoneMockup key={alt} src={src} alt={alt} caption={caption} />)}</section></PageShell> }
+import { AppPage } from '@/components/rima-content-pages'
+export default AppPage

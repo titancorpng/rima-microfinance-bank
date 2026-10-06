@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 
 const logo = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/rima_mfb_logo_transparent-4JS9Lcsc9dM5bH6RbTG8ioLwPHkEKK.png'
-const links = [['Home','/'],['Our Story','/our-story'],['The App','/app'],['Fees & Limits','/fees'],['Security','/security'],['Support','/support']]
+const links = [['Home','/'],['Our Story','/our-story'],['Personal Banking','/personal-banking'],['Business Banking','/business-banking'],['The App','/mobile-banking'],['Fees & Limits','/fees-and-limits'],['Security','/security'],['Support','/support']]
 
 export function RimaHeader() {
   const pathname = usePathname()
@@ -31,7 +31,7 @@ export function PageShell({ children }: { children: React.ReactNode }) { return 
 
 export const assetUrls = { home: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3_home_iphone-WzznfNQrnEgOwmkdHwdkhYo1mAdcFX.png', airtime: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2_topup_airtime_iphone%20%281%29-yeU9L0hFYAoYWospe5SaWsQDAafan9.png', data: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1_topup_data_iphone-ijZXNWXQZoTunKrW1R0T7hdtDpQYWw.png' }
 
-export function PhoneMockup({ src, alt, caption, variant = 'gallery' }: { src: string; alt: string; caption?: string; variant?: 'hero'|'gallery'|'thumbnail' }) { return <figure className={`phone-mockup phone-${variant}`}><div className="phone-buttons" /><div className="phone-bezel"><div className="dynamic-island" /><div className="phone-screen"><Image src={src} alt={alt} fill sizes="(max-width: 768px) 45vw, 320px" /></div></div>{caption && <figcaption>{caption}</figcaption>}</figure> }
+export function PhoneMockup({ imageSrc, alt, caption, variant = 'gallery' }: { imageSrc: string; alt: string; caption?: string; variant?: 'hero'|'gallery'|'thumbnail' }) { return <figure className={`phone-mockup phone-${variant}`}><div className="phone-buttons" /><div className="phone-bezel"><div className="dynamic-island" /><div className="phone-screen" role="img" aria-label={alt} style={{ backgroundImage: `url("${imageSrc}")` }} /></div>{caption && <figcaption>{caption}</figcaption>}</figure> }
 
 export function DownloadState() { return <div id="download" className="download-state"><strong>App download links coming soon</strong><p>The Rima MFB app is not yet available for public download. Official download links will be published here when it is released.</p></div> }
 
