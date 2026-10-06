@@ -3,40 +3,40 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://titanfitnessapplaunch.vercel.app'),
-  title: 'Titan Fitness | Train with intent.',
-  description: 'Titan Fitness helps you train with structure, track meaningful progress, and build habits that last.',
+  metadataBase: new URL('https://rimabank.ng'),
+  title: 'Rima Microfinance Bank | Banking rooted in community.',
+  description: 'Rima Microfinance Bank helps you train with structure, track meaningful progress, and build habits that last.',
   alternates: {
     canonical: '/',
   },
   openGraph: {
     type: 'website',
-    url: 'https://titanfitnessapplaunch.vercel.app',
-    siteName: 'Titan Fitness',
-    title: 'Titan Fitness | Train with intent.',
+    url: 'https://rimabank.ng',
+    siteName: 'Rima Microfinance Bank',
+    title: 'Rima Microfinance Bank | Banking rooted in community.',
     description: 'A focused training system for smarter workouts, consistent progress, and a stronger everyday life.',
     images: [
       {
-        url: '/titanfitnesslogo.jpg',
-        alt: 'Titan Fitness logo',
+        url: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/rima_mfb_logo_transparent-4JS9Lcsc9dM5bH6RbTG8ioLwPHkEKK.png',
+        alt: 'Rima Microfinance Bank logo',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Titan Fitness | Train with intent.',
+    title: 'Rima Microfinance Bank | Banking rooted in community.',
     description: 'A focused training system for smarter workouts, consistent progress, and a stronger everyday life.',
-    images: ['/titanfitnesslogo.jpg'],
+    images: ['https://hebbkx1anhila5yf.public.blob.vercel-storage.com/rima_mfb_logo_transparent-4JS9Lcsc9dM5bH6RbTG8ioLwPHkEKK.png'],
   },
   icons: {
-    icon: '/titanfitnesslogo.jpg',
-    apple: '/titanfitnesslogo.jpg',
+    icon: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/rima_mfb_logo_transparent-4JS9Lcsc9dM5bH6RbTG8ioLwPHkEKK.png',
+    apple: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/rima_mfb_logo_transparent-4JS9Lcsc9dM5bH6RbTG8ioLwPHkEKK.png',
   },
 }
 
 export const viewport: Viewport = {
   colorScheme: 'dark',
-  themeColor: '#090a08',
+  themeColor: '#062B1A',
 }
 
 export default function RootLayout({

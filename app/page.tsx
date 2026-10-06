@@ -1,567 +1,70 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import gsap from 'gsap'
-import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpRight,
-  Brain,
-  Check,
-  Dumbbell,
-  Flame,
-  Menu,
-  ScanLine,
-  X,
-  Zap,
-} from 'lucide-react'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { ArrowUpRight, ChevronDown, Menu, ShieldCheck, Sparkles, X } from 'lucide-react'
 
-const surveyUrl = 'https://form.jotform.com/262306411833046'
-
-const assets = {
-  logo: '/titanfitnesslogo.jpg',
-  poster: '/onboarding1.jpg',
-  onboarding2: '/onboarding2.jpg',
-  login: '/loginscreen.jpg',
-  home: '/homescreen.jpg',
-  scan: '/hamburger.jpg',
-  tech: '/titantechlogo.jpg',
-  flyer: '/flyer.jpg',
-  qr: '/TFsurveyQRcode.jpg',
-  video: '/titanfitnessvideo.mp4',
-}
-
-function Reveal({
-  children,
-  className = '',
-  delay = 0,
-}: {
-  children: React.ReactNode
-  className?: string
-  delay?: number
-}) {
-  return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
-function Phone({
-  image,
-  label,
-  index,
-  className = '',
-}: {
-  image: string
-  label: string
-  index: number
-  className?: string
-}) {
-  return (
-    <motion.figure
-      className={`phone phone-${index} ${className}`}
-      whileHover={{ y: -14, rotate: index % 2 ? 2 : -2 }}
-      transition={{ type: 'spring', stiffness: 180 }}
-    >
-      <span className="side-button side-button-top" />
-      <span className="side-button side-button-bottom" />
-      <span className="phone-camera" />
-      <div className="phone-screen">
-        <img src={image} alt={`${label} Titan Fitness app screen`} />
-        <span className="screen-glare" />
-      </div>
-      <figcaption>
-        <span>0{index + 1}</span>
-        {label}
-      </figcaption>
-    </motion.figure>
-  )
-}
+const logo = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/rima_mfb_logo_transparent-4JS9Lcsc9dM5bH6RbTG8ioLwPHkEKK.png'
 
 const faqs = [
-  [
-    'When does Titan Fitness launch?',
-    'Titan Fitness is currently in pre-launch. Join the waitlist to be first to hear when early access opens.',
-  ],
-  [
-    'What platforms will it support?',
-    'We are building for modern mobile experiences first. Platform availability will be announced with early access.',
-  ],
-  [
-    'Is there a free tier?',
-    'Pricing is still being shaped. Join the survey and tell us what a useful first version should include.',
-  ],
-  [
-    'How is my data handled?',
-    'Titan-Tech is designing Titan Fitness around privacy-first data practices and clear user control.',
-  ],
-  [
-    'Will it work outside Nigeria?',
-    'Yes. Titan Fitness is being designed for athletes everywhere, with its roots in the Nigerian training community.',
-  ],
+  ['Is Rima a bank?', 'Rima Microfinance Bank is a Nigerian microfinance bank licensed by the Central Bank of Nigeria. Our verified legal identity and licence details will be shown on the About page.'],
+  ['What do I need to open an account?', 'Requirements depend on the account type and current regulatory rules. We may require BVN, NIN, accepted identification and supporting information. Our team will explain what applies to you.'],
+  ['Can I use my existing Rima account in the app?', 'Where activation is available, use the existing-customer option and your registered details. If verification fails, contact support. Do not create duplicate profiles to bypass verification.'],
+  ['What does “pending” mean?', 'The final outcome has not yet been confirmed. A transaction may still complete or be reversed after investigation. Contact us if the status does not update or you need assistance.'],
+  ['How do I make a complaint?', 'Use the Complaints page, contact our official support team or visit the branch. Keep your complaint reference and supporting transaction information.'],
+  ['How do I delete my app account?', 'Visit Account & Data Deletion or use the deletion option in the app settings. Uninstalling the app does not delete your account.'],
 ]
 
+function Button({ children, href = '#services', secondary = false }: { children: React.ReactNode; href?: string; secondary?: boolean }) {
+  return <a href={href} className={`rima-button ${secondary ? 'rima-button-secondary' : ''}`}>{children}<ArrowUpRight data-icon="inline-end" /></a>
+}
+
 export default function Page() {
-  const hero = useRef<HTMLDivElement>(null)
-  const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [menuOpen, setMenuOpen] = useState(false)
-  const { scrollYProgress } = useScroll()
-  const progress = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
-
-  useEffect(() => {
-    if (!hero.current || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
-    const ctx = gsap.context(() => {
-      gsap.from('.hero-kicker, .hero-title-line, .hero-copy, .hero-actions', {
-        y: 42,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.11,
-        ease: 'power4.out',
-      })
-      gsap.to('.hero-glow', {
-        scale: 1.15,
-        opacity: 0.65,
-        duration: 5,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-      })
-    }, hero)
-
-    return () => ctx.revert()
-  }, [])
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const closeMenu = () => setMenuOpen(false)
 
   return (
-    <main>
-      <motion.div className="scroll-progress" style={{ scaleX: progress }} />
-
-      <nav className="nav glass">
-        <a href="#top" className="brand" onClick={() => setMenuOpen(false)}>
-          <img src={assets.logo} alt="Titan Fitness TF logo" />
-          <span>
-            TITAN <b>FITNESS</b>
-          </span>
+    <main className="rima-site">
+      <nav className="rima-nav island-glass" aria-label="Main navigation">
+        <a className="rima-brand" href="#top" onClick={closeMenu}>
+          <img src={logo} alt="Rima Microfinance Bank logo" />
+          <span>RIMA <b>MICROFINANCE BANK</b></span>
         </a>
-
-        <div className="nav-links">
-          <a href="#top">Home</a>
-          <a href="#system">Features</a>
-          <a href="#founders">About us</a>
-          <a href="#faq">FAQ</a>
+        <div className="rima-nav-links">
+          <a href="#top">Home</a><a href="#about">About Rima</a><a href="#services">Services</a><a href="#app">Rima App</a><a href="#help">Help Centre</a>
         </div>
-
-        <a className="button nav-cta" href={surveyUrl} target="_blank" rel="noreferrer">
-          Fill the survey <ArrowUpRight data-icon="inline-end" />
-        </a>
-
-        <button
-          className="menu-button"
-          type="button"
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-navigation"
-          onClick={() => setMenuOpen((isOpen) => !isOpen)}
-        >
-          {menuOpen ? <X /> : <Menu />}
-        </button>
-
-        {menuOpen && (
-          <div id="mobile-navigation" className="mobile-nav">
-            <a href="#top" onClick={() => setMenuOpen(false)}>
-              Home
-            </a>
-            <a href="#system" onClick={() => setMenuOpen(false)}>
-              Features
-            </a>
-            <a href="#founders" onClick={() => setMenuOpen(false)}>
-              About us
-            </a>
-            <a href="#faq" onClick={() => setMenuOpen(false)}>
-              FAQ
-            </a>
-            <a
-              className="button button-lime"
-              href={surveyUrl}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => setMenuOpen(false)}
-            >
-              Fill the survey <ArrowUpRight data-icon="inline-end" />
-            </a>
-          </div>
-        )}
+        <Button href="#contact">Contact Rima</Button>
+        <button className="rima-menu-button" type="button" aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
+        {menuOpen && <div className="rima-mobile-nav"><a href="#top" onClick={closeMenu}>Home</a><a href="#about" onClick={closeMenu}>About Rima</a><a href="#services" onClick={closeMenu}>Services</a><a href="#app" onClick={closeMenu}>Rima App</a><a href="#help" onClick={closeMenu}>Help Centre</a><Button href="#contact">Contact Rima</Button></div>}
       </nav>
 
-      <section id="top" ref={hero} className="hero hero-video-shell">
-        <video
-          className="hero-video"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          aria-label="Titan Fitness training film"
-        >
-          <source src={assets.video} type="video/mp4" />
-        </video>
-        <div className="hero-video-overlay" />
-        <div className="hero-glow" />
-
-        <div className="hero-inner section-shell">
-          <div className="hero-copy-wrap">
-            <p className="hero-kicker">
-              <span className="live-dot" /> TITAN FITNESS / 001 — THE TRAINING OS
-            </p>
-            <h1 className="hero-title">
-              <span className="hero-title-line">Train harder,</span>
-              <span className="hero-title-line accent-text">Recover smarter,</span>
-              <span className="hero-title-line">
-                Never <em>plateau.</em>
-              </span>
-            </h1>
-            <p className="hero-copy">
-              A science-backed training system for people who refuse to plateau. Titan turns your
-              data, discipline, and daily effort into a stronger version of you.
-            </p>
-            <div className="hero-actions">
-              <a className="button button-lime" href={surveyUrl} target="_blank" rel="noreferrer">
-                Fill the survey <ArrowUpRight data-icon="inline-end" />
-              </a>
-              <a className="button button-ghost" href="#method">
-                Explore the system <ArrowDown data-icon="inline-end" />
-              </a>
-            </div>
-          </div>
-
-          <div className="hero-visual">
-            <Phone image={assets.home} label="Home command center" index={0} />
-            <Phone
-              image={assets.onboarding2}
-              label="Cycle-sync training"
-              index={1}
-              className="hero-phone-back"
-            />
-          </div>
+      <section id="top" className="rima-hero rima-shell">
+        <div className="hero-orbit" />
+        <div className="hero-copy">
+          <p className="rima-eyebrow"><span className="rima-dot" /> RIMA MICROFINANCE BANK / COMMUNITY BANKING</p>
+          <h1>Banking rooted in <span>community.</span><br />Built for your everyday life.</h1>
+          <p className="hero-lede">Rima Microfinance Bank helps individuals, families and small businesses save, manage money and build stronger livelihoods. With roots in Sokoto, we are bringing our community banking experience into a new digital chapter.</p>
+          <div className="hero-actions"><Button href="#services">Explore Our Services</Button><Button href="#contact" secondary>Contact Rima</Button></div>
+          <p className="hero-note">Our mobile banking service is being prepared for launch. Visit this website for official updates.</p>
         </div>
-
-        <div className="scroll-note">
-          <span>Scroll to train</span>
-          <div className="scroll-line" />
-        </div>
+        <div className="hero-mark-wrap"><div className="hero-mark-glow" /><img className="hero-mark" src={logo} alt="Rima MFB gold emblem" /></div>
       </section>
 
-      <section id="method" className="manifesto section-shell">
-        <Reveal>
-          <p className="eyebrow">THE TITAN METHOD</p>
-          <h2>
-            Discipline is not a mood.
-            <br />
-            <span>It is a system.</span>
-          </h2>
-        </Reveal>
-        <Reveal className="manifesto-grid" delay={0.1}>
-          <p className="large-copy">
-            Your body is the hardware. Your habits are the code. Titan Fitness is the operating
-            system that makes both work harder, smarter, and together.
-          </p>
-          <div className="manifesto-meta">
-            <span>DATA → DECISION</span>
-            <span>EFFORT → ADAPTATION</span>
-            <span>CONSISTENCY → CHANGE</span>
-          </div>
-        </Reveal>
-      </section>
+      <section className="trust-strip"><div className="rima-shell trust-inner"><div><strong>ESTABLISHED IN 1993</strong><span>Community banking roots</span></div><div><ShieldCheck /><strong>LICENSED BY THE CENTRAL BANK OF NIGERIA</strong><span>Subject to verified current licence details</span></div><div><ShieldCheck /><strong>ELIGIBLE DEPOSITS INSURED BY NDIC</strong><span>Subject to applicable limits and conditions</span></div></div></section>
 
-      <section id="system" className="feature-highlight section-shell">
-        <Reveal>
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">WHAT TITAN INCLUDES</p>
-              <h2>
-                Everything you need
-                <br />
-                <span>to keep moving.</span>
-              </h2>
-            </div>
-            <p>One focused loop. Training, fueling, recovery, progress. Every signal pushing you forward.</p>
-          </div>
-        </Reveal>
+      <section id="services" className="rima-section rima-shell"><div className="section-heading"><div><p className="rima-eyebrow">BANKING FOR WHAT MATTERS</p><h2>Clear support for your <span>next step.</span></h2></div><p>Ask questions before opening an account or authorising a transaction. We explain the requirements, charges and conditions that apply to you.</p></div><div className="service-grid"><article className="service-card featured"><Sparkles /><p className="card-number">01 / PERSONAL BANKING</p><h3>Save for what matters.</h3><p>Keep funds for day-to-day needs and personal goals. Ask our team about available savings accounts and the terms that apply.</p><a href="#contact">Ask about a savings account <ArrowUpRight /></a></article><article className="service-card"><p className="card-number">02 / BUSINESS BANKING</p><h3>Support the work you do.</h3><p>Whether you trade, provide services or run a small enterprise, speak with us about an account that fits your business and documentation needs.</p><a href="#contact">Speak to our team <ArrowUpRight /></a></article><article className="service-card"><p className="card-number">03 / EVERYDAY ACCESS</p><h3>Stay connected to your account.</h3><p>Use available digital services to manage your account and review transactions. Features depend on eligibility and enabled services.</p><a href="#app">Explore Rima App <ArrowUpRight /></a></article></div></section>
 
-        <div className="highlight-grid">
-          <Reveal className="feature-phone-wrap">
-            <Phone image={assets.home} label="Home / command center" index={0} />
-          </Reveal>
+      <section id="about" className="rima-section about-section"><div className="rima-shell about-grid"><div><p className="rima-eyebrow">OUR ROOTS / YOUR NEXT STEP</p><h2>Community banking with a <span>forward view.</span></h2></div><div className="about-copy"><p>Rima Microfinance Bank is a Nigerian microfinance bank with roots in Sokoto State. Established in 1993, we serve customers whose ambitions begin with everyday needs: saving for a family goal, managing business income, and building a more stable livelihood.</p><p>Our digital transformation builds on that history. We are developing convenient channels while retaining the accountability and local understanding that customers expect from a community bank.</p><Button href="#contact" secondary>About Rima</Button></div></div></section>
 
-          <div className="stacked-features">
-            <Reveal delay={0.1}>
-              <article className="stack-card stack-card-active">
-                <Dumbbell />
-                <div>
-                  <h3>Training plans that adapt</h3>
-                  <p>Structured workouts built around your goals, capacity, and next best rep.</p>
-                </div>
-              </article>
-            </Reveal>
+      <section id="app" className="rima-section app-section rima-shell"><div className="app-card island-glass"><div><p className="rima-eyebrow">RIMA MFB APP / COMING SOON</p><h2>Your Rima account, <span>on your phone.</span></h2><p>The Rima MFB app will give eligible customers a convenient way to access enabled banking services from a supported smartphone. Official download links will be published here when it is released.</p><div className="app-points"><span>Balance and transaction history</span><span>Enabled transfer services</span><span>Supported airtime purchases</span><span>Profile and support access</span></div></div><div className="app-badge"><div className="badge-icon">R</div><strong>Official app links<br />coming soon</strong><small>Check that the publisher matches the legal entity shown on this website.</small></div></div></section>
 
-            <Reveal delay={0.18}>
-              <article className="stack-card">
-                <Flame />
-                <div>
-                  <h3>Macro and nutrition tracking</h3>
-                  <p>See what your body needs before, during, and after hard-earned sessions.</p>
-                </div>
-              </article>
-            </Reveal>
+      <section id="help" className="rima-section rima-shell"><div className="section-heading"><div><p className="rima-eyebrow">HELP CENTRE</p><h2>Answers before you <span>commit.</span></h2></div><p>Never share your PIN, password or OTP with anyone, including someone claiming to work for Rima.</p></div><div className="faq-list">{faqs.map(([question, answer], index) => <div className={`faq-item ${openFaq === index ? 'faq-open' : ''}`} key={question}><button type="button" onClick={() => setOpenFaq(openFaq === index ? null : index)} aria-expanded={openFaq === index}><span>{question}</span><ChevronDown /></button>{openFaq === index && <p>{answer}</p>}</div>)}</div></section>
 
-            <Reveal delay={0.26}>
-              <article className="stack-card">
-                <Zap />
-                <div>
-                  <h3>Progress you can feel</h3>
-                  <p>Turn effort into a clear view of strength, consistency, and momentum.</p>
-                </div>
-              </article>
-            </Reveal>
+      <section id="contact" className="rima-section contact-section"><div className="rima-shell contact-card"><div><p className="rima-eyebrow">NEED HELP WITH A TRANSACTION?</p><h2>Let&apos;s help you take the <span>next step.</span></h2><p>If a payment is pending, you notice an unfamiliar debit, or you need assistance with your account, contact us through an official Rima channel. Keep your transaction reference available.</p></div><div className="contact-actions"><Button href="mailto:contact@rimabank.ng">Send an enquiry</Button><a className="text-link" href="/complaints">Report a complaint <ArrowUpRight /></a><small>Official support details will be published here when confirmed.</small></div></div></section>
 
-            <Reveal delay={0.34}>
-              <article className="stack-card">
-                <Brain />
-                <div>
-                  <h3>Cycle-sync training</h3>
-                  <p>Make space for the signals your body is already giving you.</p>
-                </div>
-              </article>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="why section-shell">
-        <Reveal>
-          <div className="center-heading">
-            <p className="eyebrow">WHY TITAN FITNESS?</p>
-            <h2>
-              Train smarter.
-              <br />
-              <span>Never stop showing up.</span>
-            </h2>
-            <p>Built for the work between motivation and mastery.</p>
-          </div>
-        </Reveal>
-
-        <div className="why-grid">
-          <Reveal>
-            <article className="why-card">
-              <span className="icon-box">
-                <Flame />
-              </span>
-              <h3>Built around your body</h3>
-              <p>Training should respond to real life, not ask you to ignore it.</p>
-            </article>
-          </Reveal>
-
-          <Reveal delay={0.12}>
-            <article className="why-card">
-              <span className="icon-box">
-                <Brain />
-              </span>
-              <h3>Train with intelligence</h3>
-              <p>Clear signals and useful feedback, without turning fitness into noise.</p>
-            </article>
-          </Reveal>
-
-          <Reveal delay={0.24}>
-            <article className="why-card">
-              <span className="icon-box">
-                <Dumbbell />
-              </span>
-              <h3>Make the next rep count</h3>
-              <p>Less guesswork. More consistency. A system that respects your effort.</p>
-            </article>
-          </Reveal>
-        </div>
-      </section>
-
-      <section id="founders" className="tech section-shell">
-        <Reveal className="tech-inner">
-          <div className="tech-mark glass">
-            <img className="tech-flyer" src={assets.flyer} alt="Titan Fitness launch flyer" />
-          </div>
-
-          <div className="tech-copy">
-            <p className="eyebrow">ABOUT US</p>
-            <h2>
-              Human grit.
-              <br />
-              <span>Machine clarity.</span>
-            </h2>
-            <p>
-              Titan Fitness is made by the team building the future of intelligent software.
-              Technology should not replace discipline — it should make discipline impossible to
-              waste.
-            </p>
-            <a
-              className="tech-site-link"
-              href="https://titantechng.vercel.app"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Visit Titan-Tech <ArrowUpRight data-icon="inline-end" />
-            </a>
-            <div className="tech-points">
-              <span>
-                <Check /> Privacy-first data
-              </span>
-              <span>
-                <Check /> Designed for real life
-              </span>
-              <span>
-                <Check /> No empty motivation
-              </span>
-            </div>
-          </div>
-        </Reveal>
-      </section>
-
-      <section className="showcase section-shell">
-        <Reveal>
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">A LOOK INSIDE</p>
-              <h2>
-                The work,
-                <br />
-                <span>captured.</span>
-              </h2>
-            </div>
-            <p>Four screens. One training operating system. Designed to feel as focused as the work itself.</p>
-          </div>
-        </Reveal>
-
-        <div className="phone-stage">
-          <Phone image={assets.onboarding2} label="Body signal / onboarding" index={0} />
-          <Phone image={assets.login} label="Access / your system" index={1} />
-          <Phone image={assets.home} label="Home / command center" index={2} />
-          <Phone image={assets.scan} label="Scan / macro tracking" index={3} />
-        </div>
-      </section>
-
-      <section id="faq" className="faq section-shell">
-        <Reveal>
-          <div className="center-heading">
-            <p className="eyebrow">THE QUESTIONS WE HEAR</p>
-            <h2>
-              Frequently asked
-              <br />
-              <span>questions.</span>
-            </h2>
-            <p>Everything we can share before launch.</p>
-          </div>
-        </Reveal>
-
-        <div className="faq-list">
-          {faqs.map(([question, answer], index) => (
-            <Reveal key={question} delay={index * 0.05}>
-              <article className={`faq-item ${openFaq === index ? 'faq-open' : ''}`}>
-                <button onClick={() => setOpenFaq(openFaq === index ? null : index)} aria-expanded={openFaq === index}>
-                  <span>{question}</span>
-                  <span className="faq-plus">{openFaq === index ? '−' : '+'}</span>
-                </button>
-                {openFaq === index && <p>{answer}</p>}
-              </article>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <section id="waitlist" className="waitlist section-shell">
-        <div className="waitlist-inner glass">
-          <Reveal>
-            <p className="eyebrow">TITAN FITNESS / COMING SOON</p>
-            <h2>
-              Ready to earn
-              <br />
-              <span>your edge?</span>
-            </h2>
-            <p>
-              Be first through the doors. Share what you want from Titan Fitness and get launch
-              updates when early access opens.
-            </p>
-            <a className="button button-lime" href={surveyUrl} target="_blank" rel="noreferrer">
-              Scan and fill survey <ArrowUpRight data-icon="inline-end" />
-            </a>
-          </Reveal>
-
-          <Reveal className="qr-wrap" delay={0.15}>
-            <div className="qr-label">
-              <ScanLine /> Scan to join the survey
-            </div>
-            <img src={assets.qr} alt="Titan Fitness app survey QR code" />
-          </Reveal>
-        </div>
-      </section>
-
-      <footer className="footer section-shell">
-        <Reveal className="footer-island glass">
-          <div className="footer-glow" />
-
-          <div className="footer-columns">
-            <div className="footer-brand-block">
-              <div className="footer-brand">
-                <img src={assets.logo} alt="Titan Fitness" />
-                <span>TITAN FITNESS</span>
-              </div>
-              <p>Train your body. Elevate your spirit.</p>
-              <p className="footer-contact-prompt">Want to create something similar?</p>
-              <p className="contact">
-                <a href="tel:+2347018583600">+234 701 858 3600</a>
-                <a href="mailto:titantechngltd@gmail.com">titantechngltd@gmail.com</a>
-              </p>
-              <a
-                className="footer-site-link"
-                href="https://titantechng.vercel.app"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Visit here for similar projects <ArrowUpRight />
-              </a>
-            </div>
-
-            <div className="footer-nav-group">
-              <b>Legal</b>
-              <a href="/privacy-policy">Privacy policy</a>
-              <a href="/terms">Terms of use</a>
-              <a href="/account-deletion">Account deletion</a>
-            </div>
-
-            <div className="footer-nav-group">
-              <b>Explore</b>
-              <a href="#founders">About us</a>
-              <a href="#faq">FAQ</a>
-              <a href="#waitlist">Contact</a>
-            </div>
-          </div>
-
-          <div className="footer-bottom">
-            <span>© 2026 Titan-Tech Ltd.</span>
-            <span>Built for the next rep.</span>
-          </div>
-        </Reveal>
-
-        <a className="back-to-top" href="#top" aria-label="Back to top">
-          <ArrowUp />
-          <span>Back to top</span>
-        </a>
-      </footer>
+      <footer className="rima-footer rima-shell"><div className="footer-island island-glass"><div className="footer-top"><div><a className="rima-brand" href="#top"><img src={logo} alt="Rima Microfinance Bank logo" /><span>RIMA <b>MICROFINANCE BANK</b></span></a><p>Banking rooted in community. Built for your everyday life.</p></div><div className="footer-links"><strong>Explore</strong><a href="#about">About Rima</a><a href="#services">Personal Banking</a><a href="#services">Business Banking</a><a href="#app">Rima App</a></div><div className="footer-links"><strong>Support</strong><a href="#help">Help Centre</a><a href="#contact">Contact</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms & Conditions</a><a href="/account-deletion">Account & Data Deletion</a></div></div><div className="footer-bottom"><span>© 2026 Rima Microfinance Bank</span><span>Licensed by the Central Bank of Nigeria · Eligible deposits insured by NDIC</span></div></div></footer>
     </main>
   )
 }
+
