@@ -33,6 +33,12 @@ export const assetUrls = { home: 'https://hebbkx1anhila5yf.public.blob.vercel-st
 
 export function PhoneMockup({ imageSrc, alt, caption, variant = 'gallery' }: { imageSrc: string; alt: string; caption?: string; variant?: 'hero'|'gallery'|'thumbnail' }) { return <figure className={`phone-mockup phone-${variant}`}><div className="phone-buttons" /><div className="phone-bezel"><div className="dynamic-island" /><div className="phone-screen" role="img" aria-label={alt} style={{ backgroundImage: `url("${imageSrc}")` }} /></div>{caption && <figcaption>{caption}</figcaption>}</figure> }
 
+const regulatoryItems = [{ label: 'LICENSED BY THE CENTRAL BANK OF NIGERIA', short: 'CBN', icon: 'bank' }, { label: 'ELIGIBLE DEPOSITS INSURED BY NDIC', short: 'NDIC', icon: 'shield' }, { label: 'ESTABLISHED IN 1993', short: '1993', icon: 'calendar' }] as const
+
+function RegulatoryMark({ icon }: { icon: typeof regulatoryItems[number]['icon'] }) { return <span className={`regulatory-mark regulatory-mark-${icon}`} aria-hidden="true">{icon === 'bank' ? 'CBN' : icon === 'shield' ? 'NDIC' : '93'}</span> }
+
+export function RegulatoryCarousel({ logos = false }: { logos?: boolean }) { const items = [...regulatoryItems, ...regulatoryItems]; return <section className={`regulatory-carousel ${logos ? 'regulatory-carousel-logos' : ''}`} aria-label={logos ? 'Rima regulatory protections' : 'Rima regulatory information'}><div className="regulatory-track">{items.map((item, index) => <div className="regulatory-item" key={`${item.short}-${index}`}><RegulatoryMark icon={item.icon} /><span>{logos ? item.short : item.label}</span>{logos && <small>{item.label}</small>}</div>)}</div></section> }
+
 export function DownloadState() { return <div id="download" className="download-state"><strong>App download links coming soon</strong><p>The Rima MFB app is not yet available for public download. Official download links will be published here when it is released.</p></div> }
 
 export function Splash() { const [show, setShow] = useState(false); useEffect(() => { if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || sessionStorage.getItem('rima-splash')) return; setShow(true); const timer = window.setTimeout(() => { sessionStorage.setItem('rima-splash','1'); setShow(false) }, 1500); return () => window.clearTimeout(timer) }, []); if (!show) return null; return <div className="splash" role="status" aria-label="Loading"><Image src={logo} alt="" width={180} height={180} priority /><span className="sr-only">Loading</span><div className="splash-progress" /></div> }
