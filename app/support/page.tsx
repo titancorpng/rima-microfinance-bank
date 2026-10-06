@@ -1,0 +1,2 @@
+import { PageShell } from '@/components/rima-shell'
+export default function SupportPage(){return <PageShell><section className="placeholder-page"><p className="rima-eyebrow">SUPPORT</p><h1>Help when you <span>need it.</span></h1><p className="lead">Content coming soon. Official contact details, FAQs and complaints guidance will be published here.</p><div id="complaints" className="download-state"><strong>Complaints</strong><p>Complaint submission details will be published here when confirmed.</p></div></section></PageShell>}
