@@ -1,2 +1,2 @@
-import { FeesPage } from '@/components/rima-content-pages'
+import { FeesPage } from '@/components/financial-experience-pages'
 export default FeesPage

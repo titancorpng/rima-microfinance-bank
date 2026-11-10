@@ -1,2 +1,2 @@
-import { StoryPage } from '@/components/rima-content-pages'
+import { StoryPage } from '@/components/story-page'
 export default StoryPage
